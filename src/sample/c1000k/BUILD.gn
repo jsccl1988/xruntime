@@ -1,0 +1,34 @@
+executable("c1000k_server") {
+  deps = [
+    "//net:net",
+    "//server:server",
+  ]
+  
+  sources = [
+    "//sample/c1000k/c1000k_server.cc",
+    "//sample/c1000k/c1000k_server.h",
+  ]
+}
+
+executable("c1000k_client") {
+  deps = [
+    "//net:net",
+    "//server:server",
+  ]
+  
+  sources = [
+    "//sample/c1000k/c1000k_client.cc",
+    "//sample/c1000k/c1000k_client.h",
+  ]
+}
+
+executable("netengine") {
+  deps = [
+    "//net:net",
+    "//server:server",
+  ]
+  
+  sources = [
+    "//sample/c1000k/netengine.cc",
+  ]
+}

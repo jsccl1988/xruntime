@@ -1,0 +1,142 @@
+import("//build/buildflag_header.gni")
+import("//build/config/allocator.gni")
+import("//build/config/chromecast_build.gni")
+import("//build/config/compiler/compiler.gni")
+import("//build/config/nacl/config.gni")
+import("//build/config/sysroot.gni")
+import("//build/config/ui.gni")
+
+if (is_android) {
+  import("//build/config/android/rules.gni")
+}
+
+if (is_win) {
+  import("//build/config/win/visual_studio_version.gni")
+}
+
+action("zengine_copy_scripts") {
+  script = "//build/xcp.py"
+  src = "scripts"
+  target = "scripts"
+  inputs = [
+    script,
+  ]
+  outputs = [
+    "${root_out_dir}/scripts_trick",
+  ]
+  args = [
+    rebase_path(src, root_build_dir),
+    target,
+    rebase_path(target, root_build_dir),
+  ]
+}
+
+executable("zengine") {
+  if(target_cpu == "x86") {
+    lib_suffix = "32"
+  } else {
+    lib_suffix = "64"
+  }
+
+  deps = [
+    "//base:base",
+    "//net:net",
+    "//script:script",
+    "//server:server",
+    "//zengine:zengine_copy_scripts",
+  ]
+
+  include_dirs = [ "//third_party/openssl/include" ]
+  if (is_debug) {
+    lib_dirs = [ "//third_party/openssl/lib/debug" ]
+  } else {
+    lib_dirs = [ "//third_party/openssl/lib/release" ]
+  }
+
+  sources = [
+    "base/rsa_help.cc",
+    "base/rsa_help.h",
+    "module/mod_console/base_console.cc",
+    "module/mod_console/base_console.h",
+    "module/mod_console/console_listener.h",
+    "module/mod_console/console_thread.cc",
+    "module/mod_console/console_thread.h",
+    "module/mod_console/module_console_dll.cc",
+    "module/mod_console/module_console_dll.h",
+    "module/mod_console/module_console_plugin.cc",
+    "module/mod_console/module_console_plugin.h",
+    "module/mod_console/register_helper/console_register_helper.cc",
+    "module/mod_console/register_helper/console_register_helper.h",
+    "module/mod_db/module_db_dll.cc",
+    "module/mod_db/module_db_dll.h",
+    "module/mod_db/module_db_plugin.cc",
+    "module/mod_db/module_db_plugin.h",
+    "module/mod_db/register_helper/db_register_helper.cc",
+    "module/mod_db/register_helper/db_register_helper.h",
+    "module/mod_net/comm_node_info.cc",
+    "module/mod_net/comm_node_info.h",
+    "module/mod_net/module_net_dll.cc",
+    "module/mod_net/module_net_dll.h",
+    "module/mod_net/module_net_plugin.cc",
+    "module/mod_net/module_net_plugin.h",
+    "module/mod_net/register_helper/net_register_helper.cc",
+    "module/mod_net/register_helper/net_register_helper.h",
+    "module/mod_net/znet_handler_context.h",
+    "module/mod_net/znet_tcp_client.cc",
+    "module/mod_net/znet_tcp_client.h",
+    "module/mod_net/znet_tcp_server.cc",
+    "module/mod_net/znet_tcp_server.h",
+    "module/mod_xml/module_xml_dll.cc",
+    "module/mod_xml/module_xml_dll.h",
+    "module/mod_xml/module_xml_plugin.cc",
+    "module/mod_xml/module_xml_plugin.h",
+    "module/mod_xml/register_helper/xml_register_helper.cc",
+    "module/mod_xml/register_helper/xml_register_helper.h",
+    "module/mod_xml/zxml_wrapper.cc",
+    "module/mod_xml/zxml_wrapper.h",
+    "zengine/script/register_helper/base_register_helper.cc",
+    "zengine/script/register_helper/base_register_helper.h",
+    "zengine/script/register_helper/zengine_register_helper.cc",
+    "zengine/script/register_helper/zengine_register_helper.h",
+    "zengine/script/script_file_manager.cc",
+    "zengine/script/script_file_manager.h",
+    "zengine/script/script_manager.cc",
+    "zengine/script/script_manager.h",
+    "zengine/zengine_context.cc",
+    "zengine/zengine_context.h",
+    "zengine/zengine_context_manager.cc",
+    "zengine/zengine_context_manager.h",
+    "zengine/zengine_daemon.cc",
+    "zengine/zengine_daemon.h",
+    "zengine/zengine_plugin.h",
+    "zengine/zengine_plugin_dll_manager.cc",
+    "zengine/zengine_plugin_dll_manager.h",
+    "zengine/zengine_plugin_dll_func.h",
+    "zengine/zengine_root.cc",
+    "zengine/zengine_root.h",
+    "zengine/zengine_thread.cc",
+    "zengine/zengine_thread.h",
+
+    "scripts/echo_client.xml",
+    "scripts/echod.xml",    
+    "scripts/lua/util/json.lua",
+    "scripts/lua/util/logger.lua",
+    "scripts/lua/util/message_util.lua",
+    "scripts/lua/util/url_codec.lua",
+    "scripts/lua/util/util.lua",
+    "scripts/lua/zengine/echod/echod.lua",
+    "scripts/lua/zengine/echod/echod_handler_engine.lua",
+    "scripts/lua/zengine/echo_client/echo_client.lua",
+    "scripts/lua/zengine/echo_client/echo_client_handler_engine.lua",
+    "scripts/lua/zengine/main.lua",
+    "scripts/lua/zengine/thread.lua",
+    "scripts/lua/zengine/xml.lua",
+    "scripts/lua/zengine/znet_handler_engine.lua",
+  ]
+
+  if (is_win) {
+    libs = [
+      "libeay${lib_suffix}.lib",
+    ]
+  }
+}

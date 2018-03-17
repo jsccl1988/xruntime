@@ -1,0 +1,10 @@
+.DS_Store
+*.pyc
+src/out/
+*.dll
+*.lib
+*.exe
+*.log
+*.obj
+out/
+src/third_party/llvm-build

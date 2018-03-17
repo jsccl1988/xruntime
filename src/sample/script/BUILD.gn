@@ -1,0 +1,11 @@
+executable("scriptengine") {
+  deps = [
+    "//base:base",
+    "//script:script",
+  ]
+  
+  sources = [
+    "//sample/script/scriptengine.cc",
+    "//sample/script/scriptengine.lua",
+  ]
+}

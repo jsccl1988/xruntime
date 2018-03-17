@@ -1,0 +1,102 @@
+import("//build/buildflag_header.gni")
+import("//build/config/allocator.gni")
+import("//build/config/chromecast_build.gni")
+import("//build/config/compiler/compiler.gni")
+import("//build/config/nacl/config.gni")
+import("//build/config/sysroot.gni")
+import("//build/config/ui.gni")
+
+if (is_android) {
+  import("//build/config/android/rules.gni")
+}
+
+if (is_win) {
+  import("//build/config/win/visual_studio_version.gni")
+}
+
+static_library("net") {
+  deps = [
+    "//base:base",
+    "//third_party/libevent:libevent",
+  ]
+  
+  sources = [
+    "base/address_family.h",
+    "base/address_list.cc",
+    "base/address_list.h",
+    "base/byte_stream.cc",
+    "base/byte_stream.h",      
+    "base/escape.cc",
+    "base/escape.h",
+    "base/host_port_pair.cc",
+    "base/host_port_pair.h",
+    "base/io_buffer.cc",
+    "base/io_buffer.h",
+    "base/iovec.h",
+    "base/ip_endpoint.cc",
+    "base/ip_endpoint.h",
+    "base/ip_pattern.cc",
+    "base/ip_pattern.h",
+    "base/net_error_list.h",
+    "base/net_errors.cc",
+    "base/net_errors.h",
+    "base/net_errors_posix.cc",
+    "base/net_export.h",
+    "base/net_util.cc",
+    "base/net_util.h",
+    "base/sys_addrinfo.h",
+    "engine/io_handler.cc",
+    "engine/io_handler.h",
+    "engine/reactor_thread.cc",
+    "engine/reactor_thread.h",
+    "engine/reactor_thread_pool.cc",
+    "engine/reactor_thread_pool.h",
+    "engine/socket_ops.cc",
+    "engine/socket_ops.h",
+    "engine/tcp_acceptor.cc",
+    "engine/tcp_acceptor.h",
+    "engine/tcp_client.cc",
+    "engine/tcp_client.h",
+    "engine/tcp_connector.cc",
+    "engine/tcp_connector.h",
+    "engine/tcp_server.cc",
+    "engine/tcp_server.h",
+    "http/http_request_codec.cc",
+    "http/http_request_codec.h",
+    "http/http_request_context.cc",
+    "http/http_request_context.h",
+    "http/http_response_context.cc",
+    "http/http_response_context.h",
+    "http/http_server_request_info.cc",
+    "http/http_server_request_info.h",
+    "http/http_server_response_info.cc",
+    "http/http_server_response_info.h",
+    "http/http_status_code.cc",
+    "http/http_status_code.h",
+    "http/http_status_code_list.h",
+    "message_loop/message_loop_for_net.cc",
+    "message_loop/message_loop_for_net.h",
+    "message_loop/message_pump_net.cc",
+    "message_loop/message_pump_net.h",
+    "codec/znet/packet.cc",
+    "codec/znet/packet.h",
+    "codec/znet/znet_codec.cc",
+    "codec/znet/znet_codec.h",
+    "codec/znet/znet_packet_header.h",
+    "codec/teamtalk/teamtalk_codec.cc",
+    "codec/teamtalk/teamtalk_codec.h",
+    "codec/teamtalk/teamtalk_packet.cc",
+    "codec/teamtalk/teamtalk_packet.h",
+    "codec/length_header/length_header_codec.cc",
+    "codec/length_header/length_header_codec.h",
+    "util/time_syncor.h",
+    "//third_party/http_parser/http_parser.h",
+    "//third_party/http_parser/http_parser.c",    
+  ]
+
+  if (is_win) {
+    sources += [ "base/winsock_init.cc" ]
+    sources += [ "base/winsock_init.h" ]
+    sources += [ "base/net_errors_win.cc" ]
+  }
+}

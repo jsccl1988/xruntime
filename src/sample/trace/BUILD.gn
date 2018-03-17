@@ -1,0 +1,9 @@
+executable("trace") {
+  deps = [
+    "//base:base",
+  ]
+  
+  sources = [
+    "//sample/trace/trace.cpp",
+  ]
+}
