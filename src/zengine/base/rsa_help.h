@@ -21,7 +21,8 @@ int GenerateKey(char pubKey[], int& pubKeyLen, char priKey[], int& priKeyLen);
 std::string Base64encode(char pubKey[], int pubKeyLen, bool useSafeSet);
 int Base64decode(const std::string& strPubKey, char pubKey[], int& pubKeyLen);
 std::string EncryptPassword(char pubKey[], int& pubKeyLen, char password[]);
-std::string DecryptPassword(char priKey[], int priKeyLen, std::string& base64Password);
+std::string DecryptPassword(char priKey[], int priKeyLen,
+  std::string& base64Password);
 
 }
 

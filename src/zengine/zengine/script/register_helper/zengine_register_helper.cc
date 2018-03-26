@@ -22,16 +22,26 @@ bool CreateZEngineThread(const std::string& instance_name) {
 void Luabind_ZEngine_Register(lua_State* l) {
     lua_tinker::class_add<ZEngineContext>(l, "ZEngineContext");
 
-    lua_tinker::class_def<ZEngineContext>(l, "PostTaskByInstanceName", &ZEngineContext::PostTaskByInstanceName);
-    lua_tinker::class_def<ZEngineContext>(l, "PostTaskByInstanceID", &ZEngineContext::PostTaskByInstanceID);
-    lua_tinker::class_def<ZEngineContext>(l, "PostTaskToIOThread", &ZEngineContext::PostTaskToIOThread);
-    lua_tinker::class_def<ZEngineContext>(l, "PostTaskToMainThread", &ZEngineContext::PostTaskToMainThread);
-    lua_tinker::class_def<ZEngineContext>(l, "PostTask", &ZEngineContext::PostTask);
-    lua_tinker::class_def<ZEngineContext>(l, "SetTimer", &ZEngineContext::SetTimer);
-    lua_tinker::class_def<ZEngineContext>(l, "KillTimer", &ZEngineContext::KillTimer);
-    lua_tinker::class_def<ZEngineContext>(l, "context_type", &ZEngineContext::context_type);
-    lua_tinker::class_def<ZEngineContext>(l, "instance_name", &ZEngineContext::instance_name);
-    lua_tinker::class_def<ZEngineContext>(l, "context_type", &ZEngineContext::instance_id);
+    lua_tinker::class_def<ZEngineContext>(
+        l, "PostTaskByInstanceName", &ZEngineContext::PostTaskByInstanceName);
+    lua_tinker::class_def<ZEngineContext>(
+        l, "PostTaskByInstanceID", &ZEngineContext::PostTaskByInstanceID);
+    lua_tinker::class_def<ZEngineContext>(
+        l, "PostTaskToIOThread", &ZEngineContext::PostTaskToIOThread);
+    lua_tinker::class_def<ZEngineContext>(
+        l, "PostTaskToMainThread", &ZEngineContext::PostTaskToMainThread);
+    lua_tinker::class_def<ZEngineContext>(
+        l, "PostTask", &ZEngineContext::PostTask);
+    lua_tinker::class_def<ZEngineContext>(
+        l, "SetTimer", &ZEngineContext::SetTimer);
+    lua_tinker::class_def<ZEngineContext>(
+        l, "KillTimer", &ZEngineContext::KillTimer);
+    lua_tinker::class_def<ZEngineContext>(
+        l, "context_type", &ZEngineContext::context_type);
+    lua_tinker::class_def<ZEngineContext>(
+        l, "instance_name", &ZEngineContext::instance_name);
+    lua_tinker::class_def<ZEngineContext>(
+        l, "context_type", &ZEngineContext::instance_id);
 
     lua_tinker::def(l, "CreateZEngineThread", &CreateZEngineThread);
 }

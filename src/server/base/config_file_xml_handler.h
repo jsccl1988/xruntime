@@ -23,7 +23,8 @@ public:
   virtual ~ConfigFileXmlHandler() {}
 
   // À´×Ôserver::XMLHandler
-  virtual bool ElementStart(const std::string& element, const XMLAttributes& attributes);
+  virtual bool ElementStart(const std::string& element,
+    const XMLAttributes& attributes);
   virtual bool ElementEnd(const std::string& element);
   virtual bool Text(const std::string& text);
 

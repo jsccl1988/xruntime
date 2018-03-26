@@ -86,7 +86,8 @@ namespace {
 #endif
 }
 
-TCPConnector::TCPConnector(base::MessageLoop* message_loop, TCPConnector::Delegate* delegate) :
+TCPConnector::TCPConnector(base::MessageLoop* message_loop,
+  TCPConnector::Delegate* delegate) :
   connect_state_(kConnectStateInvalid),
   connector_(kInvalidSocket),
   message_loop_(message_loop),
@@ -147,9 +148,9 @@ bool TCPConnector::Connect(const std::string& ip, const std::string& port,
 
 void TCPConnector::DoConnect(int reconnect_time) {
   if (reconnect_time == 0) {
-    message_loop_->PostTask(FROM_HERE, base::Bind(&TCPConnector::ReConnect, base::Unretained(this)));
-  }
-  else {
+    message_loop_->PostTask(FROM_HERE,
+      base::Bind(&TCPConnector::ReConnect, base::Unretained(this)));
+  } else {
     message_loop_->PostDelayedTask(FROM_HERE,
       base::Bind(&TCPConnector::ReConnect, base::Unretained(this)),
       base::TimeDelta::FromSeconds(reconnect_time));
@@ -196,12 +197,13 @@ void TCPConnector::OnConnecting() {
   // for its completion.
 
 #if defined(OS_WIN)
-  if (!net::MessageLoopForNet::current()->WatchFileDescriptor(
-    connector_, true, net::MessageLoopForNet::WATCH_READ_WRITE, &watcher_, this)) {
+  if (!net::MessageLoopForNet::current()->WatchFileDescriptor(connector_,
+    true, net::MessageLoopForNet::WATCH_READ_WRITE, &watcher_, this)) {
     // 出错如何处理？？
     int os_error = 0;
     os_error = WSAGetLastError();
-    LOG(ERROR) << "WatchFileDescriptor failed: " << FormatLastWSAErrorA(os_error);
+    LOG(ERROR) << "WatchFileDescriptor failed: "
+      << FormatLastWSAErrorA(os_error);
   }
 #else
   if (!net::MessageLoopForNet::current()->WatchFileDescriptor(

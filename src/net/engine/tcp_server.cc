@@ -55,7 +55,8 @@ int TCPServer::OnNewConnection(const IOHandlerPtr& ih) {
   return io_handler_delegate_->OnNewConnection(ih);
 }
 
-int TCPServer::OnDataReceived(const IOHandlerPtr& ih, IOBuffer* data, base::Time receive_time) {
+int TCPServer::OnDataReceived(const IOHandlerPtr& ih, IOBuffer* data,
+  base::Time receive_time) {
   return io_handler_delegate_->OnDataReceived(ih, data, receive_time);
 }
 

@@ -19,24 +19,25 @@
 #include "zengine/script/script_manager.h"
 #include "zengine/zengine_context.h"
 
-//inline const char* CommHandlerStateToString(int conn_state) {
-//  const char* state_string = "kCommHandlerStateInvalid";
-//
-//  switch (conn_state){
-//  case ZNetCommHandler::kCommHandlerStateConnected:
-//    state_string = "kCommHandlerStateConnected";
-//    break;
-//  case ZNetCommHandler::kCommHandlerStateWorking:
-//    state_string = "kCommHandlerStateWorking";
-//    break;
-//  case ZNetCommHandler::kCommHandlerStateClosed:
-//    state_string = "kCommHandlerStateClosed";
-//    break;
-//  default:
-//    break;
-//  }
-//  return state_string;
-//}
+inline const char* CommHandlerStateToString(int conn_state) {
+  const char* state_string = "kCommHandlerStateInvalid";
+
+  switch (conn_state){
+  case ZNetCommHandler::kCommHandlerStateConnected:
+    state_string = "kCommHandlerStateConnected";
+    break;
+  case ZNetCommHandler::kCommHandlerStateWorking:
+    state_string = "kCommHandlerStateWorking";
+    break;
+  case ZNetCommHandler::kCommHandlerStateClosed:
+    state_string = "kCommHandlerStateClosed";
+    break;
+  default:
+    break;
+  }
+
+  return state_string;
+}
 
 ZNetCommHandler::ZNetCommHandler(SOCKET socket, net::Reactor* reactor) 
   : net::HammerIOHandler(socket, reactor)  
@@ -57,16 +58,22 @@ void ZNetCommHandler::SetUserData(void* user_data) {
 
 
 int ZNetCommHandler::OnNewConnection() {
-  string_session_id_ = base::StringPrintf("%u@%u", GetLowInt32ByInt64(GetSessionID()), GetReactorID());
-  log_prefix_ = base::StringPrintf("[%u@%u]>> ", GetLowInt32ByInt64(GetSessionID()), GetReactorID());
-  LOG(INFO) << log_prefix_ << "client_comm_handler from " << GetAddressString() << " connected";
+  string_session_id_ = base::StringPrintf("%u@%u",
+    GetLowInt32ByInt64(GetSessionID()), GetReactorID());
+  log_prefix_ =
+    base::StringPrintf("[%u@%u]>> ",
+      GetLowInt32ByInt64(GetSessionID()), GetReactorID());
+  LOG(INFO) << log_prefix_ << "client_comm_handler from " << GetAddressString()
+    << " connected";
 
   context_ = reinterpret_cast<ZEngineContext*>(GetReactor()->GetUserData());
   DCHECK(context_);
   DCHECK(context_->script_manager());
-  int result = context_->script_manager()->script_engine().CallFunction<int, ZNetCommHandler*>("OnNewConnection", this);
+  int result = context_->script_manager()->script_engine()
+    .CallFunction<int, ZNetCommHandler*>("OnNewConnection", this);
   if (result!=0) {
-    LOG(ERROR) << "ERROR: In main.lua, Execute OnNewConnection() error, error_code = " << result;
+    LOG(ERROR)
+      << "ERROR: In main.lua, Execute OnNewConnection() error, error_code = " << result;
   }
 
   return 0;
@@ -74,7 +81,9 @@ int ZNetCommHandler::OnNewConnection() {
 
 int ZNetCommHandler::OnDataReceived(const PacketPtr& packet) {
   if (packet->GetBodyLength()<sizeof(uint64_t)) {
-    LOG(ERROR) << log_prefix_ << "ZNetCommHandler::OnDataReceived - recv a invalid packet, data_len < sizeof(uint64_t) by message_type " << packet->GetCmdType();
+    LOG(ERROR) << log_prefix_
+      << "ZNetCommHandler::OnDataReceived - recv a invalid packet, data_len < sizeof(uint64_t) by message_type "
+      << packet->GetCmdType();
     return 0;
   }
   
@@ -82,31 +91,33 @@ int ZNetCommHandler::OnDataReceived(const PacketPtr& packet) {
   DCHECK(context_->script_manager());
 
   uint16 message_type = packet->GetCmdType();
-  //uint64_t client_id = 0;
-  //memcpy(&client_id, packet->GetBodyData(), sizeof(uint64_t));
-  IOBuffer2 io_buffer(reinterpret_cast<const char*>(packet->GetBodyData()), packet->GetBodyLength());
-  //
-  //  IOBuffer2 io_buffer(data, data_len);
-  //  int result = script_engine_.CallFunction("OnOnDataReceived", ih, message_type, io_buffer);
-  //  if (result!=0) {
-  //    LOG(ERROR) << "ERROR: In main.lua, Execute OnDataReceived() error, error_code = " << result;
-  //  }
-  //
-  int result = context_->script_manager()->script_engine().CallFunction<int, ZNetCommHandler*, uint16, IOBuffer2*>("OnDataReceived", this, message_type, &io_buffer);
+  IOBuffer2 io_buffer(reinterpret_cast<const char*>(packet->GetBodyData()),
+    packet->GetBodyLength());
+
+  int result = context_->script_manager()->script_engine()
+    .CallFunction<int, ZNetCommHandler*, uint16, IOBuffer2*>(
+       "OnDataReceived", this, message_type, &io_buffer);
   if (result!=0) {
-    LOG(ERROR) << "ERROR: In main.lua, Execute OnDataReceived() error, error_code = " << result;
+    LOG(ERROR)
+      << "ERROR: In main.lua, Execute OnDataReceived() error, error_code = "
+      << result;
   }
+
   return 0;
 }
 
 int ZNetCommHandler::OnConnectionClosed() {
-  LOG(INFO) << log_prefix_ << "client_comm_handler from " << GetAddressString() << " closed";
+  LOG(INFO) << log_prefix_ << "client_comm_handler from " << GetAddressString()
+    << " closed";
   DCHECK(context_);
   DCHECK(context_->script_manager());
 
-  int result = context_->script_manager()->script_engine().CallFunction<int, ZNetCommHandler*>("OnConnectionClosed", this);
+  int result = context_->script_manager()->script_engine()
+    .CallFunction<int, ZNetCommHandler*>("OnConnectionClosed", this);
   if (result!=0) {
-    LOG(ERROR) << "ERROR: In main.lua, Execute OnConnectionClosed() error, error_code = " << result;
+    LOG(ERROR)
+      << "ERROR: In main.lua, Execute OnConnectionClosed() error, error_code = "
+      << result;
   }
   return 0;
 }

@@ -23,7 +23,8 @@ public:
   explicit TCPAcceptor(base::MessageLoop* message_loop, Delegate* delegate);
   ~TCPAcceptor();
 
-  bool Create(const std::string& ip, const std::string& port, bool is_numeric_host_address);
+  bool Create(const std::string& ip, const std::string& port,
+    bool is_numeric_host_address);
 
 protected:
   void OnCreated();

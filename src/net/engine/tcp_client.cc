@@ -9,7 +9,8 @@
 
 namespace net {
 
-TCPClient::TCPClient(base::MessageLoop* message_loop, IOHandler::Delegate* io_handler_delegate) 
+TCPClient::TCPClient(base::MessageLoop* message_loop,
+  IOHandler::Delegate* io_handler_delegate)
   : message_loop_(message_loop),
     io_handler_delegate_(io_handler_delegate),
     conn_(message_loop, this) {
@@ -23,7 +24,8 @@ TCPClient::~TCPClient() {
 
 }
 
-bool TCPClient::Connect(const std::string& ip, const std::string& port, bool is_numeric_host_address) {
+bool TCPClient::Connect(const std::string& ip, const std::string& port,
+  bool is_numeric_host_address) {
   return conn_.Connect(ip, port, is_numeric_host_address);
 }
 
@@ -56,7 +58,8 @@ int TCPClient::OnNewConnection(const IOHandlerPtr& ih) {
   return io_handler_delegate_->OnNewConnection(ih);
 }
 
-int TCPClient::OnDataReceived(const IOHandlerPtr& ih, IOBuffer* data, base::Time receive_time) {
+int TCPClient::OnDataReceived(const IOHandlerPtr& ih, IOBuffer* data,
+  base::Time receive_time) {
   return io_handler_delegate_->OnDataReceived(ih, data, receive_time);
 }
 

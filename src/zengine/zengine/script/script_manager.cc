@@ -13,7 +13,7 @@
 #include "zengine/zengine/zengine_context.h"
 
 ScriptManager::ScriptManager()
-: script_file_manager_(NULL) {
+  : script_file_manager_(NULL) {
 }
 
 ScriptManager::~ScriptManager() {
@@ -34,8 +34,8 @@ bool ScriptManager::Initialize() {
 
 void ScriptManager::LoadScripts() {
   script::linked_map<base::FilePath, ScriptFileManager::ScriptFileData>::iterator it;
-  script::linked_map<base::FilePath, ScriptFileManager::ScriptFileData>& script_datas =
-    script_file_manager_->GetScriptDatas();
+  script::linked_map<base::FilePath, ScriptFileManager::ScriptFileData>& script_datas
+    = script_file_manager_->GetScriptDatas();
   for (it=script_datas.begin(); it!=script_datas.end(); ++it) {
     if (it->second.IsModified()) {
       script_engine_.DoFile(it->first.MaybeAsASCII());
@@ -110,8 +110,9 @@ int ScriptManager::ExeScript_OnTaskDataReceived(ZEngineContext* context,
 
 int ScriptManager::ExeScript_OnTimer(ZEngineContext* context,
   uint32_t timer_id, int tm) {
-  int result = script_engine_.CallFunction<int, ZEngineContext*, uint32_t, int>(
-    "OnTimer", context, timer_id, tm);
+  int result = script_engine_
+    .CallFunction<int, ZEngineContext*, uint32_t, int>(
+      "OnTimer", context, timer_id, tm);
   if (result!=0) {
     LOG(ERROR)
       << "ERROR: In main.lua, Execute OnTimer() error, error_code = " 

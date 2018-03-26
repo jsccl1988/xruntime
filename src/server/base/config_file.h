@@ -30,7 +30,9 @@ public:
   void Destroy();
 
   inline std::string& config_file_path() { return config_file_path_; }
-  inline const std::string& config_file_path() const { return config_file_path_; }
+  inline const std::string& config_file_path() const {
+    return config_file_path_;
+  }
 
 
   // 得到所有section的名字

@@ -9,7 +9,8 @@
 
 namespace net {
 
-TCPAcceptor::TCPAcceptor(base::MessageLoop* message_loop, TCPAcceptor::Delegate* delegate)
+TCPAcceptor::TCPAcceptor(base::MessageLoop* message_loop,
+  TCPAcceptor::Delegate* delegate)
   : acceptor_(kInvalidSocket),
   message_loop_(message_loop),
   delegate_(delegate) {
@@ -30,7 +31,8 @@ TCPAcceptor::~TCPAcceptor() {
 
 bool TCPAcceptor::Create(const std::string& ip, const std::string& port,
   bool is_numeric_host_address) {
-  int ret = CreateTCPListeningSocket(ip, port, is_numeric_host_address, &acceptor_);
+  int ret =
+    CreateTCPListeningSocket(ip, port, is_numeric_host_address, &acceptor_);
   if (ret != 0) {
     LOG(ERROR) << "Unable to create listening socket for: ret = " << ret
       << ": " << ip.c_str() << ":"

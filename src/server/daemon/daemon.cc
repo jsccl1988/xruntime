@@ -34,8 +34,8 @@ void OnShutdownDaemon(base::MessageLoop* message_loop) {
 
 void DoShutdownDaemon(base::MessageLoop* message_loop) {
   if (message_loop) {
-    message_loop->task_runner()->
-      PostNonNestableTask(FROM_HERE, base::Bind(&OnShutdownDaemon, message_loop));
+    message_loop->task_runner()->PostNonNestableTask(FROM_HERE,
+      base::Bind(&OnShutdownDaemon, message_loop));
   }
 }
 
@@ -145,7 +145,8 @@ int Daemon::DoMain(int argc, char** argv) {
   base::FilePath ini_filename = exe.ReplaceExtension(FILE_PATH_LITERAL("xml"));
   base::CommandLine* command_line = base::CommandLine::ForCurrentProcess();
   if (command_line->HasSwitch("xml")) {
-    ini_filename = exe.DirName().AppendASCII(command_line->GetSwitchValueASCII("xml"));
+    ini_filename =
+      exe.DirName().AppendASCII(command_line->GetSwitchValueASCII("xml"));
   }
 
   LOG(INFO) << "Load config " << ini_filename.AsUTF16Unsafe() << " ...";

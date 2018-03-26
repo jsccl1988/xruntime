@@ -54,7 +54,8 @@ public:
 
   // 同步发起连接请求
   // 线程安全
-  bool Connect(const std::string& ip, const std::string& port, bool is_numeric_host_address);
+  bool Connect(const std::string& ip, const std::string& port,
+    bool is_numeric_host_address);
   // bool IsConnected();
   bool DisConnect();
 

@@ -16,7 +16,8 @@ namespace net {
 /*
 	TimeSyncor time_syncor;
 	…
-	if (TimeSyncor:: kMaxTimSamples == time_syncor.OnRecvTimeSample(sent_time, current_time)) {
+	if (TimeSyncor:: kMaxTimSamples ==
+	  time_syncor.OnRecvTimeSample(sent_time, current_time)) {
 	  最终同步的时钟= 当前时钟+time_syncor.GetCorrectedDelta();
 	}
  */

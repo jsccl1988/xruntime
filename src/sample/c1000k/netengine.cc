@@ -41,7 +41,8 @@ public:
 
   virtual int  OnDataReceived(const IOHandlerPtr& ih, IOBuffer* data,
     const base::Time& read_time) {
-    std::cout << base::PlatformThread::CurrentId() << "@TCPServerTest::OnDataReceived ==> " << data->Peek();
+    std::cout << base::PlatformThread::CurrentId()
+      << "@TCPServerTest::OnDataReceived ==> " << data->Peek();
     ih->SendInternal(data->Peek(), data->ReadableBytes());
     data->RetrieveAll();
     return 0;
@@ -73,7 +74,8 @@ public:
 
   virtual int  OnDataReceived(const IOHandlerPtr& ih, IOBuffer* data,
     const base::Time& read_time) {
-     std::cout << "TCPConTest::OnDataReceived: data_len = " << data->ReadableBytes() << std::endl;
+     std::cout << "TCPConTest::OnDataReceived: data_len = "
+       << data->ReadableBytes() << std::endl;
     ih->SendInternal(data->Peek(), data->ReadableBytes());
     data->RetrieveAll();
     return 0;
@@ -102,7 +104,8 @@ public:
 
   virtual int  OnZNetDataReceived(const IOHandlerPtr& ih,
     const PacketPtr& packet, base::Time receive_time) {
-    std::cout << "ZNetServerTest::OnZNetDataReceived: " << packet->GetBodyData() << std::endl;
+    std::cout << "ZNetServerTest::OnZNetDataReceived: "
+      << packet->GetBodyData() << std::endl;
     codec_.SendPacket(ih, packet);
     return 0;
   }
@@ -138,7 +141,8 @@ public:
 
   virtual int  OnZNetDataReceived(const IOHandlerPtr& ih,
     const PacketPtr& packet, base::Time receive_time) {
-    std::cout << "ZNetServerTest::OnZNetDataReceived: " << packet->GetBodyData() << std::endl;
+    std::cout << "ZNetServerTest::OnZNetDataReceived: "
+      << packet->GetBodyData() << std::endl;
     std::cout << "TCPConTest::OnZNetDataReceived" << std::endl;
     codec_.SendPacket(ih, packet);
 
@@ -169,8 +173,8 @@ public:
     return 0;
   }
 
-  virtual int OnHttpRequest(const IOHandlerPtr& ih, const HttpServerRequestInfo& request,
-    base::Time receive_time) {
+  virtual int OnHttpRequest(const IOHandlerPtr& ih
+    , const HttpServerRequestInfo& request, base::Time receive_time) {
     LOG(INFO) << "OnHttpRequest(): id = " << ih->io_handler_id();
     codec_.Send500(ih, "tttttttttttttttttt");
     return 0;
@@ -210,7 +214,8 @@ int main(int argc, char* argv[]) {
 #endif  // defined(OS_WIN)
 
   // Do work here.
-  base::MessageLoop loop(std::unique_ptr<base::MessagePump>(new net::MessagePumpNet()));
+  base::MessageLoop loop(
+    std::unique_ptr<base::MessagePump>(new net::MessagePumpNet()));
 
   //HttpServerTest server(&loop);
   ZNetServerTest server(&loop);

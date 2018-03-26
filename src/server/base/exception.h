@@ -114,7 +114,8 @@ class IllegalMonitorStateException : public Exception {
 public:
   IllegalMonitorStateException(const std::string& msg);
   IllegalMonitorStateException(const IllegalMonitorStateException& msg);
-  IllegalMonitorStateException& operator=(const IllegalMonitorStateException& msg);
+  IllegalMonitorStateException& operator=(
+    const IllegalMonitorStateException& msg);
 };
 
 /**
@@ -165,7 +166,8 @@ class ArrayIndexOutOfBoundsException : public Exception {
 public:
   ArrayIndexOutOfBoundsException(int index);
   ArrayIndexOutOfBoundsException(const ArrayIndexOutOfBoundsException&);
-  ArrayIndexOutOfBoundsException& operator=(const ArrayIndexOutOfBoundsException&);
+  ArrayIndexOutOfBoundsException& operator=(
+    const ArrayIndexOutOfBoundsException&);
 
 private:
   static std::string formatMessage(int index);
@@ -188,7 +190,8 @@ public:
   UnsupportedOperationException();
   UnsupportedOperationException(const std::string& msg);
   UnsupportedOperationException(const UnsupportedOperationException&);
-  UnsupportedOperationException& operator=(const UnsupportedOperationException&);
+  UnsupportedOperationException& operator=(
+    const UnsupportedOperationException&);
 };
 
 class InternalErrorException : public Exception {

@@ -19,16 +19,25 @@ namespace {
 void Luabind_Net_Register(lua_State* l) {
   lua_tinker::class_add<base::StringPiece>(l, "StringPiece");
 
-  lua_tinker::class_add<net::IOBuffer>(l, "IOBuffer");
-  lua_tinker::class_def<net::IOBuffer>(l, "ReadableBytes", &net::IOBuffer::ReadableBytes);
-  lua_tinker::class_def<net::IOBuffer>(l, "WritableBytes", &net::IOBuffer::WritableBytes);
-  lua_tinker::class_def<net::IOBuffer>(l, "RetrieveAllAsString", &net::IOBuffer::RetrieveAllAsString);
+  lua_tinker::class_add<net::IOBuffer>(
+    l, "IOBuffer");
+  lua_tinker::class_def<net::IOBuffer>(
+    l, "ReadableBytes", &net::IOBuffer::ReadableBytes);
+  lua_tinker::class_def<net::IOBuffer>(
+    l, "WritableBytes", &net::IOBuffer::WritableBytes);
+  lua_tinker::class_def<net::IOBuffer>(
+    l, "RetrieveAllAsString", &net::IOBuffer::RetrieveAllAsString);
 
-  lua_tinker::class_add<net::IOHandler>(l, "IOHandler");
-  lua_tinker::class_def<net::IOHandler>(l, "GetAddressString", &net::IOHandler::GetAddressString);
-  lua_tinker::class_def<net::IOHandler>(l, "io_handler_id", &net::IOHandler::io_handler_id);
-  lua_tinker::class_def<net::IOHandler>(l, "SendData", (bool(net::IOHandler::*)(net::IOBuffer*))&net::IOHandler::SendData);
-  lua_tinker::class_def<net::IOHandler>(l, "SendString", &net::IOHandler::SendStringPiece);
+  lua_tinker::class_add<net::IOHandler>(
+    l, "IOHandler");
+  lua_tinker::class_def<net::IOHandler>(
+    l, "GetAddressString", &net::IOHandler::GetAddressString);
+  lua_tinker::class_def<net::IOHandler>(
+    l, "io_handler_id", &net::IOHandler::io_handler_id);
+  lua_tinker::class_def<net::IOHandler>(
+    l, "SendData", (bool(net::IOHandler::*)(net::IOBuffer*))&net::IOHandler::SendData);
+  lua_tinker::class_def<net::IOHandler>(
+    l, "SendString", &net::IOHandler::SendStringPiece);
 }
 }
 

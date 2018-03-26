@@ -22,23 +22,38 @@ CdbConnPoolManagerProxy* GetDBConnPoolMgr();
 namespace {
 
 void Luabind_DB_Register(lua_State* l) {
-  //lua_tinker::class_add<db::QueryAnswer>(l, "QueryAnswer");
-  //lua_tinker::class_def<db::QueryAnswer>(l, "FetchRow", &db::QueryAnswer::FetchRow);
-  //lua_tinker::class_def<db::QueryAnswer>(l, "PrintDebugFieldNames", &db::QueryAnswer::PrintDebugFieldNames);
-  //lua_tinker::class_def<db::QueryAnswer>(l, "GetColumnName", &db::QueryAnswer::GetColumnName);
-  //lua_tinker::class_def<db::QueryAnswer>(l, "GetColumnLength", (uint32_t(db::QueryAnswer::*)(uint32_t) const)&db::QueryAnswer::GetColumnLength);
-  //lua_tinker::class_def<db::QueryAnswer>(l, "ColumnIsNull", (bool(db::QueryAnswer::*)(uint32_t) const)&db::QueryAnswer::ColumnIsNull);
-  //lua_tinker::class_def<db::QueryAnswer>(l, "GetColumnValue", (std::string(db::QueryAnswer::*)(uint32_t) const)&db::QueryAnswer::GetColumnValue);
-  //lua_tinker::class_def<db::QueryAnswer>(l, "GetColumnCount", &db::QueryAnswer::GetColumnCount);
-  //lua_tinker::class_def<db::QueryAnswer>(l, "GetRowCount", &db::QueryAnswer::GetRowCount);
+  //lua_tinker::class_add<db::QueryAnswer>(
+  //  l, "QueryAnswer");
+  //lua_tinker::class_def<db::QueryAnswer>(
+  //  l, "FetchRow", &db::QueryAnswer::FetchRow);
+  //lua_tinker::class_def<db::QueryAnswer>(
+  //  l, "PrintDebugFieldNames", &db::QueryAnswer::PrintDebugFieldNames);
+  //lua_tinker::class_def<db::QueryAnswer>(
+  //  l, "GetColumnName", &db::QueryAnswer::GetColumnName);
+  //lua_tinker::class_def<db::QueryAnswer>(
+  //  l, "GetColumnLength", (uint32_t(db::QueryAnswer::*)(uint32_t) const)&db::QueryAnswer::GetColumnLength);
+  //lua_tinker::class_def<db::QueryAnswer>(
+  //  l, "ColumnIsNull", (bool(db::QueryAnswer::*)(uint32_t) const)&db::QueryAnswer::ColumnIsNull);
+  //lua_tinker::class_def<db::QueryAnswer>(
+  //  l, "GetColumnValue", (std::string(db::QueryAnswer::*)(uint32_t) const)&db::QueryAnswer::GetColumnValue);
+  //lua_tinker::class_def<db::QueryAnswer>(
+  //  l, "GetColumnCount", &db::QueryAnswer::GetColumnCount);
+  //lua_tinker::class_def<db::QueryAnswer>(
+  //  l, "GetRowCount", &db::QueryAnswer::GetRowCount);
 
-  lua_tinker::class_add<CdbConnPoolManagerProxy>(l, "CdbConnPoolManagerProxy");
-  lua_tinker::class_def<CdbConnPoolManagerProxy>(l, "Query", &CdbConnPoolManagerProxy::Query);
-  lua_tinker::class_def<CdbConnPoolManagerProxy>(l, "ExecuteInsertID", &CdbConnPoolManagerProxy::ExecuteInsertID);
-  lua_tinker::class_def<CdbConnPoolManagerProxy>(l, "Execute", &CdbConnPoolManagerProxy::Execute);
+  lua_tinker::class_add<CdbConnPoolManagerProxy>(
+    l, "CdbConnPoolManagerProxy");
+  lua_tinker::class_def<CdbConnPoolManagerProxy>(
+    l, "Query", &CdbConnPoolManagerProxy::Query);
+  lua_tinker::class_def<CdbConnPoolManagerProxy>(
+    l, "ExecuteInsertID", &CdbConnPoolManagerProxy::ExecuteInsertID);
+  lua_tinker::class_def<CdbConnPoolManagerProxy>(
+    l, "Execute", &CdbConnPoolManagerProxy::Execute);
 
-  lua_tinker::def(l, "GetDBConnPoolMgrByInstanceName", &GetDBConnPoolMgrByInstanceName);
-  lua_tinker::def(l, "GetDBConnPoolMgr", &GetDBConnPoolMgr);
+  lua_tinker::def(
+    l, "GetDBConnPoolMgrByInstanceName", &GetDBConnPoolMgrByInstanceName);
+  lua_tinker::def(
+    l, "GetDBConnPoolMgr", &GetDBConnPoolMgr);
 }
 
 }

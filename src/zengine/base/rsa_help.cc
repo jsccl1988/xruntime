@@ -12,13 +12,11 @@ using std::string;
 
 namespace RSAHelper {
 
-int GenerateKey(char pubKey[], int& pubKeyLen, char priKey[], int& priKeyLen)
-{
+int GenerateKey(char pubKey[], int& pubKeyLen, char priKey[], int& priKeyLen) {
   RSA* rsa = NULL;
   int ret = -1;
   rsa = RSA_generate_key(gRSAGenerateKeyBits, RSA_F4, NULL, NULL);
-  if (!rsa)
-  {
+  if (!rsa) {
     printf("RSA_generate_key() failed");
     return -1;
   }
@@ -26,8 +24,7 @@ int GenerateKey(char pubKey[], int& pubKeyLen, char priKey[], int& priKeyLen)
   //创建BIO
   BIO *PubBio = BIO_new(BIO_s_mem());
   BIO *PriBio = BIO_new(BIO_s_mem());
-  if (!PubBio || !PriBio)
-  {
+  if (!PubBio || !PriBio) {
     printf("BIO_new() failed");
     if (PubBio) BIO_free_all(PubBio);
     if (PriBio) BIO_free_all(PriBio);
@@ -37,8 +34,7 @@ int GenerateKey(char pubKey[], int& pubKeyLen, char priKey[], int& priKeyLen)
 
   //生成公钥
   ret = i2d_RSAPublicKey_bio(PubBio, rsa);
-  if (ret < 0)
-  {
+  if (ret < 0) {
     printf("i2d_RSAPublicKey_bio() failed");
     if (PubBio) BIO_free_all(PubBio);
     if (PriBio) BIO_free_all(PriBio);
@@ -48,8 +44,7 @@ int GenerateKey(char pubKey[], int& pubKeyLen, char priKey[], int& priKeyLen)
 
   //生成私钥
   ret = i2d_RSAPrivateKey_bio(PriBio, rsa);
-  if (ret < 0)
-  {
+  if (ret < 0) {
     printf("i2d_RSAPrivateKey_bio() failed");
     if (PubBio) BIO_free_all(PubBio);
     if (PriBio) BIO_free_all(PriBio);
@@ -59,8 +54,7 @@ int GenerateKey(char pubKey[], int& pubKeyLen, char priKey[], int& priKeyLen)
 
   //获取公钥
   pubKeyLen = BIO_read(PubBio, pubKey, gRSAKeyBufLen);
-  if (pubKeyLen < 0)
-  {
+  if (pubKeyLen < 0) {
     printf("BIO_read() PubKey PubKeyLen = %d.", pubKeyLen);
 
     if (PubBio) BIO_free_all(PubBio);
@@ -71,8 +65,7 @@ int GenerateKey(char pubKey[], int& pubKeyLen, char priKey[], int& priKeyLen)
 
   //获取私钥
   priKeyLen = BIO_read(PriBio, priKey, gRSAKeyBufLen);
-  if (priKeyLen < 0)
-  {
+  if (priKeyLen < 0) {
     printf("BIO_read() PriKey PriKeyLen = %d\n", priKeyLen);
 
     if (PubBio) BIO_free_all(PubBio);
@@ -88,8 +81,7 @@ int GenerateKey(char pubKey[], int& pubKeyLen, char priKey[], int& priKeyLen)
   return 0;
 }
 
-string Base64encode(char pubKey[], int pubKeyLen, bool useSafeSet)
-{
+string Base64encode(char pubKey[], int pubKeyLen, bool useSafeSet) {
   // see RFC 3548
   static unsigned char codeCharUnsafe[] =
     "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
@@ -105,8 +97,7 @@ string Base64encode(char pubKey[], int pubKeyLen, bool useSafeSet)
 
   const char * p = static_cast<const char *>(pubKey);
 
-  for (int index = 0; index < srcLength; index += 3)
-  {
+  for (int index = 0; index < srcLength; index += 3) {
     unsigned char codeBits = (p[index] & 0xfc) >> 2;
 
     assert(codeBits < 64);
@@ -115,16 +106,14 @@ string Base64encode(char pubKey[], int pubKeyLen, bool useSafeSet)
 
     // do second codeBits
     codeBits = ((p[index] & 0x3) << 4);
-    if (index + 1 < srcLength)
-    {
+    if (index + 1 < srcLength) {
       codeBits |= ((p[index + 1] & 0xf0) >> 4);
     }
     assert(codeBits < 64);
     dstData[dstIndex++] = codeChar[codeBits]; // c1 output
     assert(dstIndex <= dstLimitLength);
 
-    if (index + 1 >= srcLength)
-    {
+    if (index + 1 >= srcLength) {
       dstData[dstIndex++] = codeChar[64];
       assert(dstIndex <= dstLimitLength);
       dstData[dstIndex++] = codeChar[64];
@@ -134,16 +123,14 @@ string Base64encode(char pubKey[], int pubKeyLen, bool useSafeSet)
 
     // do third codeBits
     codeBits = ((p[index + 1] & 0xf) << 2);
-    if (index + 2 < srcLength)
-    {
+    if (index + 2 < srcLength) {
       codeBits |= ((p[index + 2] & 0xc0) >> 6);
     }
     assert(codeBits < 64);
     dstData[dstIndex++] = codeChar[codeBits]; // c2 output
     assert(dstIndex <= dstLimitLength);
 
-    if (index + 2 >= srcLength)
-    {
+    if (index + 2 >= srcLength) {
       dstData[dstIndex++] = codeChar[64];
       assert(dstIndex <= dstLimitLength);
       break; // encoded d0 d1 only
@@ -160,12 +147,10 @@ string Base64encode(char pubKey[], int pubKeyLen, bool useSafeSet)
   return string(reinterpret_cast<char*>(dstData), dstIndex);
 }
 
-int Base64decode(const string& strPubKey, char pubKey[], int& pubKeyLen)
-{
+int Base64decode(const string& strPubKey, char pubKey[], int& pubKeyLen) {
   // see RFC 3548
   // this will decode normal and URL safe alphabet
-  static signed char base64Lookup[128] =
-  {
+  static signed char base64Lookup[128] = {
       -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
       -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
       -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
@@ -187,21 +172,18 @@ int Base64decode(const string& strPubKey, char pubKey[], int& pubKeyLen)
   //bin.reserve( size()*3/4 );
   pubKeyLen = 0;
 
-  for (unsigned int i = 0; i < strPubKey.size(); i++)
-  {
+  for (unsigned int i = 0; i < strPubKey.size(); i++) {
     unsigned int x = strPubKey[i] & 0x7F;
     char c1, c2, c3;
 
     int v = base64Lookup[x];
 
-    if (v >= 0)
-    {
+    if (v >= 0) {
       val = val << 6;
       val |= v;
       wc++;
 
-      if (wc == 4)
-      {
+      if (wc == 4) {
         c3 = char(val & 0xFF); val = val >> 8;
         c2 = char(val & 0xFF); val = val >> 8;
         c1 = char(val & 0xFF); val = val >> 8;
@@ -214,8 +196,8 @@ int Base64decode(const string& strPubKey, char pubKey[], int& pubKeyLen)
         val = 0;
       }
     }
-    if (base64Lookup[x] == -2)
-    {
+
+    if (base64Lookup[x] == -2) {
       if (wc == 2) val = val << 12;
       if (wc == 3) val = val << 6;
 
@@ -224,13 +206,10 @@ int Base64decode(const string& strPubKey, char pubKey[], int& pubKeyLen)
       c1 = char(val & 0xFF); val = val >> 8;
 
       unsigned int xNext = strPubKey[i] & 0x7F;
-      if ((i + 1 < strPubKey.size()) && (base64Lookup[xNext] == -2))
-      {
+      if ((i + 1 < strPubKey.size()) && (base64Lookup[xNext] == -2)) {
         pubKey[pubKeyLen++] = c1;
         i++;
-      }
-      else
-      {
+      } else {
         pubKey[pubKeyLen++] = c1;
         pubKey[pubKeyLen++] = c2;
       }
@@ -242,8 +221,7 @@ int Base64decode(const string& strPubKey, char pubKey[], int& pubKeyLen)
   return 0;
 }
 
-string EncryptPassword(char pubKey[], int& pubKeyLen, char password[])
-{
+string EncryptPassword(char pubKey[], int& pubKeyLen, char password[]) {
   BIO *DeBio = BIO_new(BIO_s_mem());
   if (!DeBio) {
     if (DeBio)
@@ -308,8 +286,7 @@ string DecryptPassword(char priKey[], int priKeyLen, string& base64Password) {
 
   int ret = -1;
   ret = BIO_write(DeBio, priKey, priKeyLen);
-  if (ret < 0)
-  {
+  if (ret < 0) {
     if (DeBio) BIO_free_all(DeBio);
 
     printf("APP_ERROR:rsa导入私钥BIO_write()失败");

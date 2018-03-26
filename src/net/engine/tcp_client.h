@@ -19,10 +19,12 @@ class TCPClient :
   public TCPConnector::Delegate,
   public IOHandler::Delegate {
 public:
-  TCPClient(base::MessageLoop* message_loop, IOHandler::Delegate* io_handler_delegate);
+  TCPClient(base::MessageLoop* message_loop,
+    IOHandler::Delegate* io_handler_delegate);
   virtual ~TCPClient();
 
-  bool Connect(const std::string& ip, const std::string& port, bool is_numeric_host_address);
+  bool Connect(const std::string& ip, const std::string& port,
+    bool is_numeric_host_address);
   bool DisConnect();
 
   IOHandlerPtr io_handler() const {
@@ -41,7 +43,8 @@ protected:
 
   // IOHandler::Delegate* io_handler_delegate
   virtual int  OnNewConnection(const IOHandlerPtr& ih);
-  virtual int  OnDataReceived(const IOHandlerPtr& ih, IOBuffer* data, base::Time receive_time);
+  virtual int  OnDataReceived(const IOHandlerPtr& ih, IOBuffer* data,
+    base::Time receive_time);
   virtual int  OnConnectionClosed(const IOHandlerPtr& ih);
 
 private:

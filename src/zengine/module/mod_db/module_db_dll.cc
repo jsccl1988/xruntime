@@ -30,10 +30,11 @@ const std::string& ModuleName_DB(void) {
 
 CdbConnPoolManagerProxy* GetDBConnPoolMgrByInstanceName(
   const std::string& instance_name) {
-  return g_module_db_plugin ==
-    NULL ? NULL : g_module_db_plugin->GetDBConnPoolMgrByInstanceName(instance_name);
+  return g_module_db_plugin == NULL ? NULL : g_module_db_plugin->
+    GetDBConnPoolMgrByInstanceName(instance_name);
 }
 
 CdbConnPoolManagerProxy* GetDBConnPoolMgr() {
-  return g_module_db_plugin == NULL ? NULL : g_module_db_plugin->GetDBConnPoolMgr();
+  return g_module_db_plugin == NULL ? NULL : g_module_db_plugin->
+    GetDBConnPoolMgr();
 }

@@ -35,7 +35,8 @@ public:
   virtual void OnNewSession() {
     state_ = kSessionState_Connected;
   }
-  virtual int  OnSessionDataReceived(uint16_t message_type, const void* data, uint32_t data_len) {
+  virtual int  OnSessionDataReceived(uint16_t message_type,
+    const void* data, uint32_t data_len) {
     return 0;
   }
   virtual void OnSessionClosed() {

@@ -16,7 +16,8 @@ namespace net {
 
 class ReactorThreadPool {
 public:
-  explicit ReactorThreadPool(int reactor_pool_size = 0, ReactorThread::Delegate* delegate=NULL);
+  explicit ReactorThreadPool(int reactor_pool_size = 0,
+    ReactorThread::Delegate* delegate=NULL);
   ~ReactorThreadPool();
 
 	bool Start();

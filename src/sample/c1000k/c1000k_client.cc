@@ -44,7 +44,8 @@ int	C1000kClient::Initialize( int argc, char** argv ) {
     server_port = command_line->GetSwitchValueASCII("server_port");
   }
   if (command_line->HasSwitch("conn_count")) {
-    base::StringToInt(command_line->GetSwitchValueASCII("conn_count"), &conn_count);
+    base::StringToInt(command_line->GetSwitchValueASCII("conn_count"),
+      &conn_count);
   }
 
   codec_.reset(new net::LengthHeaderCodec(this));

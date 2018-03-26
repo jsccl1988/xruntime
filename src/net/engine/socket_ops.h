@@ -47,8 +47,9 @@ int CreateTCPConnectedSocket(const std::string& ip, const std::string& port,
   bool is_numeric_host_address, SOCKET *connect_socket);
 
 // 创建阻塞连接
-bool CreateBlockingTCPConnectedSocket(const std::string& ip, const std::string& port,
-  bool is_numeric_host_address, SOCKET *connect_socket);
+bool CreateBlockingTCPConnectedSocket(const std::string& ip,
+  const std::string& port, bool is_numeric_host_address,
+  SOCKET *connect_socket);
 
 int Accept(SOCKET acceptor, SOCKET *accepted_socket);
 

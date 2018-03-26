@@ -17,7 +17,8 @@ namespace zengine {
 
 bool ZNetTCPClient::Connect(const CommNodeInfo& comm_node_info) {
   if (client_.get() == NULL) {
-    ZEngineContext* ctx = ZEngineContextManager::GetInstance()->LookupMainContext();
+    ZEngineContext* ctx =
+      ZEngineContextManager::GetInstance()->LookupMainContext();
     CHECK(ctx);
     script_ = ctx->script_manager()->GetScriptEngine();
     znet_handler_context_.reset(new ZNetHandlerContext(
@@ -34,9 +35,12 @@ bool ZNetTCPClient::Connect(const CommNodeInfo& comm_node_info) {
 int ZNetTCPClient::OnNewConnection(const net::IOHandlerPtr& ih) {
   ih->SetIOContext(znet_handler_context_.get());
 
-  int result = script_->CallFunction<int, net::IOHandler*>("OnNewConnection", ih.get());
+  int result = script_
+    ->CallFunction<int, net::IOHandler*>("OnNewConnection", ih.get());
   if (result!=0) {
-    LOG(ERROR) << "ERROR: In main.lua, Execute OnNewConnection() error, error_code = " << result;
+    LOG(ERROR)
+      << "ERROR: In main.lua, Execute OnNewConnection() error, error_code = "
+      << result;
   }
 
   return 0;
@@ -49,8 +53,9 @@ int ZNetTCPClient::OnDataReceived(const net::IOHandlerPtr& ih,
   base::StringPiece buf = data->ToStringPiece();
   data->RetrieveAll();
 
-  int result = script_->CallFunction<int, net::IOHandler*, base::StringPiece>(
-    "OnDataReceived", ih.get(), buf);
+  int result = script_
+    ->CallFunction<int, net::IOHandler*, base::StringPiece>(
+      "OnDataReceived", ih.get(), buf);
   if (result!=0) {
     LOG(ERROR)
       << "ERROR: In main.lua, Execute OnDataReceived() error, error_code = "

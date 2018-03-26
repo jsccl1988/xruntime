@@ -26,7 +26,6 @@ HttpRequestContext::HttpRequestContext() {
 }
 
 HttpRequestContext::~HttpRequestContext() {
-  // LOG(INFO) << "HttpRequestContext::~HttpRequestContext()";
 }
 
 
@@ -35,7 +34,8 @@ void HttpRequestContext::Reset() {
 }
 
 int HttpRequestContext::OnHttpDataParse(IOBuffer* data) {
-  int n = http_parser_execute(&http_parser_, &http_parser_settings_, data->Peek(), data->ReadableBytes());
+  int n = http_parser_execute(&http_parser_, &http_parser_settings_,
+    data->Peek(), data->ReadableBytes());
   if (n>0) {
     data->Retrieve(n);
   } else {
@@ -54,33 +54,43 @@ int HttpRequestContext::OnHttpDataParse(IOBuffer* data) {
 }
 
 
-int HttpRequestContext::OnUrl(http_parser* parser, const char *at, size_t length) {
-  HttpRequestContext* context = reinterpret_cast<HttpRequestContext*>(parser->data);
+int HttpRequestContext::OnUrl(http_parser* parser,
+  const char *at, size_t length) {
+  HttpRequestContext* context =
+    reinterpret_cast<HttpRequestContext*>(parser->data);
   return context->DoUrl(at, length);
 }
 
-int HttpRequestContext::OnHeaderField(http_parser* parser, const char *at, size_t length) {
-  HttpRequestContext* context = reinterpret_cast<HttpRequestContext*>(parser->data);
+int HttpRequestContext::OnHeaderField(http_parser* parser,
+  const char *at, size_t length) {
+  HttpRequestContext* context =
+    reinterpret_cast<HttpRequestContext*>(parser->data);
   return context->DoHeaderField(at, length);
 }
 
-int HttpRequestContext::OnHeaderValue(http_parser* parser, const char *at, size_t length) {
-  HttpRequestContext* context = reinterpret_cast<HttpRequestContext*>(parser->data);
+int HttpRequestContext::OnHeaderValue(http_parser* parser,
+  const char *at, size_t length) {
+  HttpRequestContext* context =
+    reinterpret_cast<HttpRequestContext*>(parser->data);
   return context->DoHeaderValue(at, length);
 }
 
 int HttpRequestContext::OnHeadersComplete(http_parser* parser) {
-  HttpRequestContext* context = reinterpret_cast<HttpRequestContext*>(parser->data);
+  HttpRequestContext* context =
+    reinterpret_cast<HttpRequestContext*>(parser->data);
   return context->DoHeadersComplete();
 }
 
-int HttpRequestContext::OnBody(http_parser* parser, const char *at, size_t length) {
-  HttpRequestContext* context = reinterpret_cast<HttpRequestContext*>(parser->data);
+int HttpRequestContext::OnBody(http_parser* parser,
+  const char *at, size_t length) {
+  HttpRequestContext* context =
+    reinterpret_cast<HttpRequestContext*>(parser->data);
   return context->DoBody(at, length);
 }
 
 int HttpRequestContext::OnMessageComplete(http_parser* parser) {
-  HttpRequestContext* context = reinterpret_cast<HttpRequestContext*>(parser->data);
+  HttpRequestContext* context =
+    reinterpret_cast<HttpRequestContext*>(parser->data);
   return context->DoMessageComplete();
 }
 
@@ -95,7 +105,8 @@ int HttpRequestContext::DoHeaderField(const char *at, size_t length) {
 }
 
 int HttpRequestContext::DoHeaderValue(const char *at, size_t length) {
-  http_request_.headers.insert(std::make_pair(tmp_header_field_, std::string(at, length)));
+  http_request_.headers.insert(
+    std::make_pair(tmp_header_field_, std::string(at, length)));
   STLClearObject(&tmp_header_field_);
   return 0;
 }

@@ -30,7 +30,6 @@ public:
   virtual ~ZNetCommHandler();
   void Destroy();
 
-  //////////////////////////////////////////////////////////////////////////
   virtual int OnNewConnection();
   virtual int OnDataReceived(const PacketPtr& packet);
   virtual int OnConnectionClosed();

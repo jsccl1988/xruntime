@@ -77,7 +77,8 @@ const char* ConfigFile::GetString(const char* section,
   return val;
 }
 
-int ConfigFile::GetInt(const char* section, const char* key, int default_val) const {
+int ConfigFile::GetInt(const char* section, const char* key,
+  int default_val) const {
   int val = default_val;
   const char* str_val = GetString(section, key, NULL);
   if (str_val!=NULL) {
@@ -86,7 +87,8 @@ int ConfigFile::GetInt(const char* section, const char* key, int default_val) co
   return val;
 }
 
-CStringVector ConfigFile::GetCStringList(const char* section, const char* key) const {
+CStringVector ConfigFile::GetCStringList(const char* section,
+  const char* key) const {
   CStringVector values;
   SectionMap::const_iterator it = config_map_.find(section);
   if (it != config_map_.end()) {
@@ -95,7 +97,8 @@ CStringVector ConfigFile::GetCStringList(const char* section, const char* key) c
   return values;
 }
 
-StringVector ConfigFile::GetStringList(const char* section, const char* key) const {
+StringVector ConfigFile::GetStringList(const char* section,
+  const char* key) const {
   StringVector values;
   SectionMap::const_iterator it = config_map_.find(section);
   if (it != config_map_.end()) {
@@ -119,7 +122,8 @@ bool ConfigFile::CheckBySection(const char* section) const {
   return config_map_.find(section) != config_map_.end();
 }
 
-bool ConfigFile::CheckBySectionAndKey(const char* section, const char* key) const {
+bool ConfigFile::CheckBySectionAndKey(const char* section,
+  const char* key) const {
   bool result = false;
   SectionMap::const_iterator it = config_map_.find(section);
   if (it != config_map_.end()) {
@@ -133,7 +137,8 @@ bool ConfigFile::CheckBySectionAndKey(const char* section, const char* key) cons
   return result;
 }
 
-bool ConfigFile::CheckByValue(const char* section, const char* key, const char* val) const {
+bool ConfigFile::CheckByValue(const char* section, const char* key,
+  const char* val) const {
   bool result = false;
   SectionMap::const_iterator it = config_map_.find(section);
   if (it != config_map_.end()) {

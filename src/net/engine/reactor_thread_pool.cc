@@ -11,7 +11,8 @@
 
 namespace net {
 
-ReactorThreadPool::ReactorThreadPool(int reactor_pool_size, ReactorThread::Delegate* delegate) {
+ReactorThreadPool::ReactorThreadPool(int reactor_pool_size,
+  ReactorThread::Delegate* delegate) {
   next_reactor_ = 0;
 
   reactor_pool_size = reactor_pool_size < 0 ? 0 : reactor_pool_size;

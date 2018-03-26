@@ -17,7 +17,8 @@
 namespace zengine {
 
 void ZXmlWrapper::Initialize() {
-  ZEngineContext* ctx = ZEngineContextManager::GetInstance()->LookupMainContext();
+  ZEngineContext* ctx =
+    ZEngineContextManager::GetInstance()->LookupMainContext();
   CHECK(ctx);
   script_ = ctx->script_manager()->GetScriptEngine();
 }
@@ -43,8 +44,9 @@ bool ZXmlWrapper::DoParseXml(lua_tinker::table xml, const char* data) {
 bool ZXmlWrapper::ElementStart(const std::string& element,
   const server::XMLAttributes& attributes) {
 
-  int result = script_->CallFunction<int, lua_tinker::table, const char*,
-    server::XMLAttributes>("ElementStart", *table_, element.c_str(), attributes);
+  int result = script_
+    ->CallFunction<int, lua_tinker::table, const char*, server::XMLAttributes>(
+      "ElementStart", *table_, element.c_str(), attributes);
   if (result!=0) {
     LOG(ERROR)
       << "ERROR: In main.lua, Execute ElementStart() error, error_code = "

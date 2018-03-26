@@ -17,7 +17,8 @@ namespace zengine {
 
 bool ZNetTCPServer::Create(const CommNodeInfo& comm_node_info) {
   if (server_.get() == NULL) {
-    ZEngineContext* ctx = ZEngineContextManager::GetInstance()->LookupMainContext();
+    ZEngineContext* ctx =
+      ZEngineContextManager::GetInstance()->LookupMainContext();
     CHECK(ctx);
     script_ = ctx->script_manager()->GetScriptEngine();
 

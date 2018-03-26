@@ -71,7 +71,8 @@ NullPointerException::NullPointerException(const NullPointerException& src)
   : RuntimeException(src) {
 }
 
-NullPointerException& NullPointerException::operator=(const NullPointerException& src) {
+NullPointerException& NullPointerException::operator=(
+  const NullPointerException& src) {
   RuntimeException::operator=(src);
   return *this;
 }
@@ -80,11 +81,13 @@ IllegalArgumentException::IllegalArgumentException(const std::string& msg1)
   : RuntimeException(msg1) {
 }
 
-IllegalArgumentException::IllegalArgumentException(const IllegalArgumentException& src)
+IllegalArgumentException::IllegalArgumentException(
+  const IllegalArgumentException& src)
   : RuntimeException(src) {
 }
 
-IllegalArgumentException& IllegalArgumentException::operator=(const IllegalArgumentException& src) {
+IllegalArgumentException& IllegalArgumentException::operator=(
+  const IllegalArgumentException& src) {
   RuntimeException::operator=(src);
   return *this;
 }
@@ -111,11 +114,13 @@ MissingResourceException::MissingResourceException(const std::string& key)
 }
 
 
-MissingResourceException::MissingResourceException(const MissingResourceException& src)
+MissingResourceException::MissingResourceException(
+  const MissingResourceException& src)
   : Exception(src) {
 }
 
-MissingResourceException& MissingResourceException::operator=(const MissingResourceException& src) {
+MissingResourceException& MissingResourceException::operator=(
+  const MissingResourceException& src) {
   Exception::operator=(src);
   return *this;
 }
@@ -131,7 +136,8 @@ TranscoderException::TranscoderException(const TranscoderException &src)
   : Exception(src) {
 }
 
-TranscoderException& TranscoderException::operator=(const TranscoderException& src) {
+TranscoderException& TranscoderException::operator=(
+  const TranscoderException& src) {
   Exception::operator=(src);
   return *this;
 }
@@ -145,14 +151,16 @@ MutexException& MutexException::operator=(const MutexException& src) {
   return *this;
 }
 
-InterruptedException::InterruptedException() : Exception("Thread was interrupted") {
+InterruptedException::InterruptedException()
+  : Exception("Thread was interrupted") {
 }
 
 InterruptedException::InterruptedException(const InterruptedException &src)
   : Exception(src) {
 }
 
-InterruptedException& InterruptedException::operator=(const InterruptedException& src) {
+InterruptedException& InterruptedException::operator=(
+  const InterruptedException& src) {
   Exception::operator=(src);
   return *this;
 }
@@ -166,15 +174,18 @@ ThreadException& ThreadException::operator=(const ThreadException& src) {
   return *this;
 }
 
-IllegalMonitorStateException::IllegalMonitorStateException(const std::string& msg1)
+IllegalMonitorStateException::IllegalMonitorStateException(
+  const std::string& msg1)
   : Exception(msg1) {
 }
 
-IllegalMonitorStateException::IllegalMonitorStateException(const IllegalMonitorStateException& src)
+IllegalMonitorStateException::IllegalMonitorStateException(
+  const IllegalMonitorStateException& src)
   : Exception(src) {
 }
 
-IllegalMonitorStateException& IllegalMonitorStateException::operator=(const IllegalMonitorStateException& src) {
+IllegalMonitorStateException& IllegalMonitorStateException::operator=(
+  const IllegalMonitorStateException& src) {
   Exception::operator=(src);
   return *this;
 }
@@ -183,11 +194,13 @@ InstantiationException::InstantiationException(const std::string& msg1)
   : Exception(msg1) {
 }
 
-InstantiationException::InstantiationException(const InstantiationException& src)
+InstantiationException::InstantiationException(
+  const InstantiationException& src)
   : Exception(src) {
 }
 
-InstantiationException& InstantiationException::operator=(const InstantiationException& src) {
+InstantiationException& InstantiationException::operator=(
+  const InstantiationException& src) {
   Exception::operator=(src);
   return *this;
 }
@@ -200,11 +213,13 @@ NoSuchElementException::NoSuchElementException(const std::string& msg)
   : Exception(msg) {
 }
 
-NoSuchElementException::NoSuchElementException(const NoSuchElementException& src)
+NoSuchElementException::NoSuchElementException(
+  const NoSuchElementException& src)
   : Exception(src) {
 }
 
-NoSuchElementException& NoSuchElementException::operator=(const NoSuchElementException& src) {
+NoSuchElementException& NoSuchElementException::operator=(
+  const NoSuchElementException& src) {
   Exception::operator=(src);
   return *this;
 }
@@ -222,7 +237,8 @@ IllegalStateException::IllegalStateException(const IllegalStateException& src)
   : Exception(src) {
 }
 
-IllegalStateException& IllegalStateException::operator=(const IllegalStateException& src) {
+IllegalStateException& IllegalStateException::operator=(
+  const IllegalStateException& src) {
   Exception::operator=(src);
   return *this;
 }
@@ -231,11 +247,13 @@ ArrayIndexOutOfBoundsException::ArrayIndexOutOfBoundsException(int index)
   : Exception(formatMessage(index)) {
 }
 
-ArrayIndexOutOfBoundsException::ArrayIndexOutOfBoundsException(const ArrayIndexOutOfBoundsException& src)
+ArrayIndexOutOfBoundsException::ArrayIndexOutOfBoundsException(
+  const ArrayIndexOutOfBoundsException& src)
   : Exception(src) {
 }
 
-ArrayIndexOutOfBoundsException& ArrayIndexOutOfBoundsException::operator=(const ArrayIndexOutOfBoundsException& src) {
+ArrayIndexOutOfBoundsException& ArrayIndexOutOfBoundsException::operator=(
+  const ArrayIndexOutOfBoundsException& src) {
   Exception::operator=(src);
   return *this;
 }
@@ -251,7 +269,8 @@ InvalidRequestException::InvalidRequestException(const std::string& message) :
 
 }
 
-InvalidRequestException& InvalidRequestException::operator=(const InvalidRequestException& src) {
+InvalidRequestException& InvalidRequestException::operator=(
+  const InvalidRequestException& src) {
   Exception::operator=(src);
   return *this;
 }
@@ -261,7 +280,8 @@ UnknownObjectException::UnknownObjectException(const std::string& message) :
 
 }
 
-UnknownObjectException& UnknownObjectException::operator=(const UnknownObjectException& src) {
+UnknownObjectException& UnknownObjectException::operator=(
+  const UnknownObjectException& src) {
   Exception::operator=(src);
   return *this;
 }
@@ -271,17 +291,19 @@ UnsupportedOperationException::UnsupportedOperationException()
 
 }
 
-UnsupportedOperationException::UnsupportedOperationException(const std::string& msg)
+UnsupportedOperationException::UnsupportedOperationException(
+  const std::string& msg)
   : Exception(msg) {
 
 }
 
-UnsupportedOperationException::UnsupportedOperationException(const UnsupportedOperationException& src)
+UnsupportedOperationException::UnsupportedOperationException(
+  const UnsupportedOperationException& src)
   : Exception(src) {
 }
 
-UnsupportedOperationException& UnsupportedOperationException::operator=(const UnsupportedOperationException& src)
-{
+UnsupportedOperationException& UnsupportedOperationException::operator=(
+  const UnsupportedOperationException& src) {
   Exception::operator=(src);
   return *this;
 }

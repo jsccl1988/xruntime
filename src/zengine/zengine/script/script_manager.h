@@ -33,14 +33,14 @@ public:
 
   void DoWatchSignal();
 
-  //////////////////////////////////////////////////////////////////////////
   int ExeScript_MainInitialize();
   int ExeScript_MainDestroy();
 
   int ExeScript_OnThreadInitialize(ZEngineContext* context);
   int ExeScript_OnThreadDestroy(ZEngineContext* context);
 
-  int ExeScript_OnTaskDataReceived(ZEngineContext* context, const std::string& task_data);
+  int ExeScript_OnTaskDataReceived(ZEngineContext* context,
+    const std::string& task_data);
   int ExeScript_OnTimer(ZEngineContext* context, uint32_t timer_id, int tm);
 
 private:

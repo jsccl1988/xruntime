@@ -18,7 +18,8 @@ const int FILES_AND_DIRECTORIES =
         base::FileEnumerator::DIRECTORIES;
 }
 
-void ScriptFileManager::Initialize(const std::vector<base::FilePath>& file_paths) {
+void ScriptFileManager::Initialize(
+  const std::vector<base::FilePath>& file_paths) {
   // 保证只初始化一次
   if (!watcher_file_paths_.empty())
     return;
@@ -49,7 +50,8 @@ void ScriptFileManager::Initialize(const std::vector<base::FilePath>& file_paths
             script_fild_data.SetLastModifiedTime(file_info.GetLastModifiedTime());
             script_datas_.insert(std::make_pair(file, script_fild_data));
 
-            LOG(INFO) << "ScriptFileManager::Initialize - Ready load scipt file_path: "
+            LOG(INFO)
+              << "ScriptFileManager::Initialize - Ready load scipt file_path: "
               << file.AsUTF8Unsafe() << ".";
           }
         }
@@ -66,7 +68,8 @@ void ScriptFileManager::Initialize(const std::vector<base::FilePath>& file_paths
             ScriptFileData script_fild_data;
             script_fild_data.SetLastModifiedTime(file_info.last_modified);
             script_datas_.insert(std::make_pair(file, script_fild_data));
-            LOG(INFO) << "ScriptFileManager::Initialize - Ready load scipt file_path: "
+            LOG(INFO)
+              << "ScriptFileManager::Initialize - Ready load scipt file_path: "
               << file.AsUTF8Unsafe() << ".";
           }
         }

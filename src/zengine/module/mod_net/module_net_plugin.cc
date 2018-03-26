@@ -59,7 +59,8 @@ void ModuleNetPlugin::Initialize() {
       CommNodeInfo& comm_node = *comm_node2;
       const char* val = NULL;
       comm_node.instance_name = instances.string_vector[i];
-      val = config_file_->GetString(instances.string_vector[i].c_str(), "net_type");
+      val = config_file_->
+        GetString(instances.string_vector[i].c_str(), "net_type");
       if (!val) {
         LOG(ERROR) << "ModuleNetPlugin::Initialize - CommNodeInfo:"
           << instances.string_vector[i] << ":host is empty.";
@@ -68,11 +69,13 @@ void ModuleNetPlugin::Initialize() {
       comm_node.net_type = val;
       if (!comm_node.CheckNetType()) {
         LOG(ERROR) << "ModuleNet2Plugin::Initialize - net_type:"
-          << val << "is invalid, shuold is " << CommNodeInfo::kNetType_TCPAcceptor
+          << val << "is invalid, shuold is "
+          << CommNodeInfo::kNetType_TCPAcceptor
           << " or " << CommNodeInfo::kNetType_TCPConnector;
       }
 
-      val = config_file_->GetString(instances.string_vector[i].c_str(), "addr_info");
+      val = config_file_->
+        GetString(instances.string_vector[i].c_str(), "addr_info");
       if (!val) { LOG(ERROR) << "ModuleNet2Plugin::Initialize - CommNodeInfo:"
         << instances.string_vector[i] << ":user is empty."; break; }
       comm_node.addr = val;
@@ -81,10 +84,11 @@ void ModuleNetPlugin::Initialize() {
         LOG(ERROR) << "ModuleNet2Plugin::Initialize - addr_info:" <<
           val << "is invalid, not sep char ':'";
       }
-      comm_node.port = comm_node.addr.substr(pos+1, comm_node.addr.length() - pos - 1);
+      comm_node.port =
+        comm_node.addr.substr(pos+1, comm_node.addr.length() - pos - 1);
       comm_node.addr = comm_node.addr.substr(0, pos);
-      comm_node.reconnected_timeout =
-        config_file_->GetInt(instances.string_vector[i].c_str(), "reconnected_time", 10);
+      comm_node.reconnected_timeout = config_file_->
+        GetInt(instances.string_vector[i].c_str(), "reconnected_time", 10);
 
       // ÷±Ω”¡¨∞…
       comm_nodes_.push_back(comm_node2);
@@ -95,7 +99,8 @@ void ModuleNetPlugin::Initialize() {
       } else {
         std::unique_ptr<ZNetTCPServer> server(new ZNetTCPServer());
         if(!server->Create(comm_node)) {
-          LOG(ERROR) << "ModuleNet2Plugin::Initialize - Create TCPAcceptor server "
+          LOG(ERROR)
+            << "ModuleNet2Plugin::Initialize - Create TCPAcceptor server "
             << comm_node.addr << ":" << comm_node.port << " error!";
         } else {
           servers_.push_back(server.release());

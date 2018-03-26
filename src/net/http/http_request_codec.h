@@ -21,7 +21,8 @@ public:
     virtual ~Delegate() {}
 
     virtual int OnHttpConnection(const IOHandlerPtr& ih) { return 0; }
-    virtual int OnHttpRequest(const IOHandlerPtr& ih, const HttpServerRequestInfo& request, base::Time receive_time) { return 0; }
+    virtual int OnHttpRequest(const IOHandlerPtr& ih,
+      const HttpServerRequestInfo& request, base::Time receive_time) { return 0; }
     virtual int OnHttpConnectionClosed(const IOHandlerPtr& ih) { return 0; }
   };
 
@@ -33,10 +34,12 @@ public:
 
   // From IOHandler::Delegate
   virtual int  OnNewConnection(const IOHandlerPtr& ih);
-  virtual int  OnDataReceived(const IOHandlerPtr& ih, IOBuffer* data, base::Time receive_time);
+  virtual int  OnDataReceived(const IOHandlerPtr& ih, IOBuffer* data,
+    base::Time receive_time);
   virtual int  OnConnectionClosed(const IOHandlerPtr& ih);
 
-  void SendResponse(const IOHandlerPtr& ih, const HttpServerResponseInfo& response);
+  void SendResponse(const IOHandlerPtr& ih,
+    const HttpServerResponseInfo& response);
   void Send404(const IOHandlerPtr& ih);
   void Send500(const IOHandlerPtr& ih, const std::string& message);
 

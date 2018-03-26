@@ -32,6 +32,7 @@ void ZEngineThread::CleanUp() {
 
 void ZEngineThread::OnTaskDataReceived(shared_ptr<net::IOBuffer> task_data) {
   if (context_) {
-    context_->script_manager()->ExeScript_OnTaskDataReceived(context_, task_data->Peek());
+    context_->script_manager()
+      ->ExeScript_OnTaskDataReceived(context_, task_data->Peek());
   }
 }

@@ -25,7 +25,8 @@ public:
     IOHandler::Delegate* io_handler_delegate, int reactor_pool_size = 0);
   ~TCPServer();
 
-  bool Create(const std::string& ip, const std::string& port, bool is_numeric_host_address);
+  bool Create(const std::string& ip, const std::string& port,
+    bool is_numeric_host_address);
 
   base::MessageLoop* message_loop() {
     return message_loop_;
@@ -37,7 +38,8 @@ protected:
 
   // IOHandler::Delegate* io_handler_delegate
   virtual int  OnNewConnection(const IOHandlerPtr& ih);
-  virtual int  OnDataReceived(const IOHandlerPtr& ih, IOBuffer* data, base::Time receive_time);
+  virtual int  OnDataReceived(const IOHandlerPtr& ih, IOBuffer* data,
+    base::Time receive_time);
   virtual int  OnConnectionClosed(const IOHandlerPtr& ih);
 
 private:
