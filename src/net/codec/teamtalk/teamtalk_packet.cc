@@ -14,7 +14,8 @@ const TeamTalkPacketPtr& TeamTalkPacket::GetEmptyPacket() {
   return kEmptyPacketPtr;
 }
 
-TeamTalkPacket::TeamTalkPacket(uint32_t message_type, uint16_t reserved, uint32_t body_len) {
+TeamTalkPacket::TeamTalkPacket(uint32_t message_type, uint16_t reserved,
+  uint32_t body_len) {
   data_ = (uint8_t*)malloc(body_len + kPacketHeaderSize);
   CHECK(data_ != NULL);
 

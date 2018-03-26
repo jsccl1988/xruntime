@@ -40,7 +40,8 @@ const int kReadBufSize = 4096;
 
 base::StaticAtomicSequenceNumber IOHandler::g_last_sequence_number_;
 
-IOHandler::IOHandler(base::MessageLoop* message_loop, SOCKET socket, Delegate* delegate)
+IOHandler::IOHandler(base::MessageLoop* message_loop, SOCKET socket,
+  Delegate* delegate)
   : socket_(socket)
   , message_loop_(message_loop)
   , delegate_(delegate)
@@ -86,7 +87,8 @@ void IOHandler::Create() {
   if (message_loop_ == net::MessageLoopForNet::current()) {
     OnCreated();
   } else {
-    message_loop_->PostTask(FROM_HERE, base::Bind(&IOHandler::OnCreated, base::Unretained(this)));
+    message_loop_->PostTask(
+      FROM_HERE, base::Bind(&IOHandler::OnCreated, base::Unretained(this)));
   }
 }
 
@@ -94,7 +96,8 @@ namespace {
 //#ifndef INET6_ADDRSTRLEN
 //#define INET6_ADDRSTRLEN 65
 //#endif
-std::string NetAddressToString(const struct sockaddr* net_address, socklen_t address_len) {
+std::string NetAddressToString(const struct sockaddr* net_address,
+  socklen_t address_len) {
 #if defined(OS_WIN)
     // EnsureWinsockInit();
 #endif
@@ -124,9 +127,6 @@ void IOHandler::OnCreated() {
   struct sockaddr* address = reinterpret_cast<struct sockaddr*>(&addr_storage);
   if (!getpeername(socket_, address, &addr_len)) {
     remote_string_ = NetAddressToString(address, addr_len);
-    //const struct sockaddr_in* addr = reinterpret_cast<const struct sockaddr_in*>(address);
-    //const char* bytes = reinterpret_cast<const char*>(&addr->sin_addr);
-    //remote_string_.assign(&bytes[0], &bytes[4]);
   }
 
   if (delegate_) {
@@ -165,7 +165,8 @@ void IOHandler::Read(base::Time recv_time) {
     Close();
   } else {
 #if defined(OS_WIN)
-    PLOG_STREAM(ERROR) << "handleRead failed: WSAGetLastError()==" << WSAGetLastError();
+    PLOG_STREAM(ERROR)
+      << "handleRead failed: WSAGetLastError()==" << WSAGetLastError();
 #elif defined(OS_POSIX)
     LOG(ERROR) << "handleRead failed: errno << " errno;
 #endif
@@ -185,7 +186,8 @@ bool IOHandler::SendStringPiece(base::StringPiece data) {
     SendInternal(data);
   } else {
     message_loop_->PostTask(FROM_HERE,
-      base::Bind(&IOHandler::SendInternal2, base::Unretained(this), data.as_string()));
+      base::Bind(&IOHandler::SendInternal2, base::Unretained(this),
+        data.as_string()));
   }
   return true;
 }
@@ -195,7 +197,8 @@ bool IOHandler::SendData(const base::StringPiece& data) {
     SendInternal(data);
   } else {
     message_loop_->PostTask(FROM_HERE,
-      base::Bind(&IOHandler::SendInternal2, base::Unretained(this), data.as_string()));
+      base::Bind(&IOHandler::SendInternal2, base::Unretained(this),
+        data.as_string()));
   }
   return true;
 }
@@ -205,7 +208,8 @@ bool IOHandler::SendData(net::IOBuffer* data) {
    SendInternal(data->Peek(), data->ReadableBytes());
  } else {
    message_loop_->PostTask(FROM_HERE,
-     base::Bind(&IOHandler::SendInternal2, base::Unretained(this), data->RetrieveAllAsString()));
+     base::Bind(&IOHandler::SendInternal2, base::Unretained(this),
+       data->RetrieveAllAsString()));
  }
  return true;
 }
@@ -226,7 +230,8 @@ void IOHandler::SendInternal(const void* data, uint32_t data_len) {
   bool fault_error = false;
 
   if (!IsWriting() && write_buf_.ReadableBytes() == 0) {
-    nwrote =  HANDLE_EINTR(send(socket_, static_cast<const char*>(data), data_len, 0));
+    nwrote =  HANDLE_EINTR(send(socket_,
+      static_cast<const char*>(data), data_len, 0));
     if (nwrote >= 0) {
       remaining = data_len - nwrote;
     } else {
@@ -248,8 +253,8 @@ void IOHandler::SendInternal(const void* data, uint32_t data_len) {
   if (!fault_error && remaining > 0) {
     write_buf_.Write(static_cast<const char*>(data)+nwrote, remaining);
     if (!IsWriting()) {
-      net::MessageLoopForNet::current()->WatchFileDescriptor(
-        socket_, true, net::MessageLoopForNet::WATCH_WRITE, &write_watcher_, this);
+      net::MessageLoopForNet::current()->WatchFileDescriptor(socket_, true,
+        net::MessageLoopForNet::WATCH_WRITE, &write_watcher_, this);
       write_wait_state_ = WAITING_WRITE;
     }
   }
@@ -257,7 +262,8 @@ void IOHandler::SendInternal(const void* data, uint32_t data_len) {
 
 void IOHandler::OnWrite() {
   if (IsWriting()) {
-    int n =  HANDLE_EINTR(send(socket_, write_buf_.Peek(), write_buf_.ReadableBytes(), 0));
+    int n =  HANDLE_EINTR(send(socket_,
+      write_buf_.Peek(), write_buf_.ReadableBytes(), 0));
     if (n > 0) {
       write_buf_.Retrieve(n);
       if (write_buf_.ReadableBytes() == 0) {

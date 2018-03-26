@@ -9,7 +9,8 @@
 
 namespace net {
 
-int LengthHeaderCodec::OnDataReceived(const IOHandlerPtr& ih, IOBuffer* data, base::Time receive_time) {
+int LengthHeaderCodec::OnDataReceived(const IOHandlerPtr& ih, IOBuffer* data,
+  base::Time receive_time) {
   int ret = 0;
   while (data->ReadableBytes() >= header_len_) {
     int32_t len = data->PeekBigEndianInt32();

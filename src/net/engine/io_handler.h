@@ -32,7 +32,8 @@ public:
     virtual ~Delegate() {}
 
     virtual int  OnNewConnection(const IOHandlerPtr& ih) { return 0; }
-    virtual int  OnDataReceived(const IOHandlerPtr& ih, IOBuffer* data, base::Time receive_time) { return 0; }
+    virtual int  OnDataReceived(const IOHandlerPtr& ih, IOBuffer* data,
+      base::Time receive_time) { return 0; }
     virtual int  OnConnectionClosed(const IOHandlerPtr& ih) { return 0; }
     virtual void OnConnectedError(const IOHandlerPtr& ih, int err_code) {}
   };

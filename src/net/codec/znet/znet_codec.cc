@@ -12,13 +12,15 @@
 
 namespace net {
 
-int ZNetCodec::OnDataReceived(const IOHandlerPtr& ih, IOBuffer* data, base::Time receive_time) {
+int ZNetCodec::OnDataReceived(const IOHandlerPtr& ih, IOBuffer* data,
+  base::Time receive_time) {
 
   uint16_t message_type;
   uint32_t body_len;
 
   while (data->ReadableBytes()>=Packet::kPacketHeaderSize) {
-    int ret = ZNetPacketHeader::ParsePacketHeader((const uint8_t*)(data->Peek()), &message_type, &body_len);
+    int ret = ZNetPacketHeader::ParsePacketHeader(
+      (const uint8_t*)(data->Peek()), &message_type, &body_len);
     if (ret==-1) {
       return ret;
     } else if (ret==1) {
@@ -29,7 +31,8 @@ int ZNetCodec::OnDataReceived(const IOHandlerPtr& ih, IOBuffer* data, base::Time
     } else if (ret==0) {
       if (data->ReadableBytes()>=(int)((body_len+Packet::kPacketHeaderSize))) {
         PacketPtr p(new Packet(message_type, body_len));
-        memcpy(p->GetBodyMutableData(), data->Peek()+Packet::kPacketHeaderSize, body_len);
+        memcpy(p->GetBodyMutableData(),
+          data->Peek()+Packet::kPacketHeaderSize, body_len);
         int ret = delegate_->OnZNetDataReceived(ih, p, receive_time);
         data->Retrieve(body_len+Packet::kPacketHeaderSize);
         return ret;

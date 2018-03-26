@@ -17,7 +17,8 @@ public:
   virtual ~CodecCallback() {}
 
   virtual int  OnCodecNewConnection(const IOHandlerPtr& ih) { return 0; }
-  virtual int  OnCodecDataReceived(const IOHandlerPtr& ih, const void* data, base::Time receive_time) { return 0; }
+  virtual int  OnCodecDataReceived(const IOHandlerPtr& ih,
+    const void* data, base::Time receive_time) { return 0; }
   virtual int  OnCodecConnectionClosed(const IOHandlerPtr& ih) { return 0; }
 };
 

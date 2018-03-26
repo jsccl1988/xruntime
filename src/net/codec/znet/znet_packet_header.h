@@ -53,8 +53,8 @@ public:
   //  0 ： 解析成功，有数据包体
   //  1 ： 解析成功，未带数据包体
 
-  static inline int ParsePacketHeader(const uint8_t* data, uint16_t* message_type,
-    uint32_t* body_len) {
+  static inline int ParsePacketHeader(const uint8_t* data,
+    uint16_t* message_type, uint32_t* body_len) {
     uint16_t version;
     version = (uint16_t)data[0] << 8 | data[1];
     *message_type = (uint16_t)data[2] << 8 | data[3];

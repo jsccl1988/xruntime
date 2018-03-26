@@ -9,7 +9,8 @@
 
 namespace net {
 
-int TeamTalkCodec::OnDataReceived(const IOHandlerPtr& ih, IOBuffer* data, base::Time receive_time) {
+int TeamTalkCodec::OnDataReceived(const IOHandlerPtr& ih, IOBuffer* data,
+  base::Time receive_time) {
 
   uint32_t message_type;
   uint32_t body_len;
@@ -27,9 +28,11 @@ int TeamTalkCodec::OnDataReceived(const IOHandlerPtr& ih, IOBuffer* data, base::
       data->Retrieve(TeamTalkPacket::kPacketHeaderSize);
       return ret;
     } else if (ret==0) {
-      if (data->ReadableBytes()>=(int)((body_len+TeamTalkPacket::kPacketHeaderSize))) {
+      if (data->ReadableBytes() >=
+        (int)((body_len+TeamTalkPacket::kPacketHeaderSize))) {
         TeamTalkPacketPtr p(new TeamTalkPacket(message_type, reserved, body_len));
-        memcpy(p->GetBodyMutableData(), data->Peek()+TeamTalkPacket::kPacketHeaderSize, body_len);
+        memcpy(p->GetBodyMutableData(),
+          data->Peek()+TeamTalkPacket::kPacketHeaderSize, body_len);
         int ret = delegate_->OnTTDataReceived(ih, p, receive_time);
         data->Retrieve(body_len+TeamTalkPacket::kPacketHeaderSize);
         return ret;

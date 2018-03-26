@@ -35,14 +35,16 @@ public:
     return delegate_->OnTTNewConnection(ih);
   }
 
-  virtual int  OnDataReceived(const IOHandlerPtr& ih, IOBuffer* data, base::Time receive_time);
+  virtual int  OnDataReceived(const IOHandlerPtr& ih, IOBuffer* data,
+    base::Time receive_time);
 
   virtual int  OnConnectionClosed(const IOHandlerPtr& ih) {
     return delegate_->OnTTConnectionClosed(ih);
   }
 
   bool SendPacket(const IOHandlerPtr& ih, const TeamTalkPacketPtr& packet) {
-    return ih->SendData(packet->GetRawdataConstBuffer(), packet->GetRawdataLength());
+    return ih->SendData(packet->GetRawdataConstBuffer(),
+      packet->GetRawdataLength());
   }
 
 protected:

@@ -63,7 +63,8 @@ public:
   //  -1： 解析出错，如果版本号不对或者数据包长度超过kMaxPacketSize
   //  0 ： 解析成功，有数据包体
   //  1 ： 解析成功，未带数据包体
-  static inline int ParsePacketHeader(const uint8_t* head_data, uint32_t* message_type,
+  static inline int ParsePacketHeader(const uint8_t* head_data,
+    uint32_t* message_type,
     uint16_t* reserved, uint32_t* body_len) {
     uint16_t version;
     // uint16_t reserved;

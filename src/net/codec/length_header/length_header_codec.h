@@ -18,10 +18,16 @@ public:
   public:
     virtual ~Delegate() {}
 
-    virtual int OnLengthHeaderNewConnection(const IOHandlerPtr& ih) { return 0; }
+    virtual int OnLengthHeaderNewConnection(const IOHandlerPtr& ih) {
+      return 0;
+    }
     virtual int OnLengthHeaderDataReceived(const IOHandlerPtr& ih,
-      const base::StringPiece& packet, base::Time receive_time) { return 0; }
-    virtual int OnLengthHeaderConnectionClosed(const IOHandlerPtr& ih) { return 0; }
+      const base::StringPiece& packet, base::Time receive_time) {
+      return 0;
+    }
+    virtual int OnLengthHeaderConnectionClosed(const IOHandlerPtr& ih) {
+      return 0;
+    }
   };
 
   LengthHeaderCodec(LengthHeaderCodec::Delegate* delegate,
@@ -36,7 +42,8 @@ public:
     return delegate_->OnLengthHeaderNewConnection(ih);
   }
 
-  virtual int  OnDataReceived(const IOHandlerPtr& ih, IOBuffer* data, base::Time receive_time);
+  virtual int  OnDataReceived(const IOHandlerPtr& ih, IOBuffer* data,
+    base::Time receive_time);
 
   virtual int  OnConnectionClosed(const IOHandlerPtr& ih) {
     return delegate_->OnLengthHeaderConnectionClosed(ih);
