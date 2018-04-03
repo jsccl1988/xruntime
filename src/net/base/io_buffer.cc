@@ -57,10 +57,6 @@ int IOBuffer::ReadFd(int fd, int* saved_errno) {
     writer_index_ = buffer_.size();
     Write(extrabuf, n - writable);
   }
-  // if (n == writable + sizeof extrabuf)
-  // {
-  //   goto line_30;
-  // }
   return n;
 #endif
 

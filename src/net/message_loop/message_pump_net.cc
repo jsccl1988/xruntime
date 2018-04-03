@@ -111,8 +111,10 @@ int SocketPairWin32(int socks[2]) {
 
   do {
     if (listen(listener, 1) == SOCKET_ERROR) break;
-    if ((socks[0] = WSASocket(AF_INET, SOCK_STREAM, 0, NULL, 0, flags)) == INVALID_SOCKET) break;
-    if (connect(socks[0], (const struct sockaddr*) &addr, sizeof(addr)) == SOCKET_ERROR) break;
+    if ((socks[0] = WSASocket(AF_INET, SOCK_STREAM, 0, NULL, 0, flags))
+      == INVALID_SOCKET) break;
+    if (connect(socks[0], (const struct sockaddr*) &addr, sizeof(addr))
+      == SOCKET_ERROR) break;
     if ((socks[1] = accept(listener, NULL, NULL)) == INVALID_SOCKET) break;
     closesocket(listener);
     return 0;
@@ -269,8 +271,7 @@ bool MessagePumpNet::WatchFileDescriptor(int fd,
   if (evt.get() == NULL) {
     // Ownership is transferred to the controller.
     evt.reset(new event);
-  }
-  else {
+  } else {
     // Make sure we don't pick up any funky internal libevent masks.
     int old_interest_mask = evt.get()->ev_events &
       (EV_READ | EV_WRITE | EV_PERSIST);
@@ -367,8 +368,7 @@ void MessagePumpNet::Run(Delegate* delegate) {
     // but to service all pending events when it wakes up.
     if (delayed_work_time_.is_null()) {
       event_base_loop(event_base_, EVLOOP_ONCE);
-    }
-    else {
+    } else {
       base::TimeDelta delay = delayed_work_time_ - base::TimeTicks::Now();
       if (delay > base::TimeDelta()) {
         struct timeval poll_tv;

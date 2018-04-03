@@ -53,8 +53,7 @@ void TCPAcceptor::Accept() {
   int ret = net::Accept(acceptor_, &conn);
   if (ret != -1) {
     delegate_->OnCreateConnection(conn);
-  }
-  else {
+  } else {
     // TODO(ibrar): some error handling required here
 #if defined(OS_WIN)
     LOG(ERROR) << WSAGetLastError();
