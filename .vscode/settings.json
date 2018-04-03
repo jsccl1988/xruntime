@@ -2,6 +2,18 @@
     "files.associations": {
         "queue": "cpp",
         "stack": "cpp",
-        "ios": "cpp"
+        "ios": "cpp",
+        "__tree": "c",
+        "bitset": "c",
+        "forward_list": "c",
+        "functional": "c",
+        "future": "c",
+        "iterator": "c",
+        "list": "c",
+        "memory": "c",
+        "random": "c",
+        "regex": "c",
+        "scoped_allocator": "c",
+        "tuple": "c"
     }
 }
