@@ -41,12 +41,6 @@ SET temp=%USERPROFILE%\AppData\Local\Temp
 set DevEnvDir=%VSINSTALLDIR%
 set MSVCDir=%VCINSTALLDIR%\VC
 
-set workspace=%~dp0
-set depot_tools_path=%workspace%..\common\depot_tools
-set python_path=%depot_tools_path%\python276_bin
-
-set PATH=%depot_tools_path%;%python_path=%;%MicroSoftSDKDir%\bin;%DevEnvDir%;%MSVCDir%\BIN;%VCINSTALLDIR%\Common7\Tools;%VCINSTALLDIR%\Common7\Tools\bin\prerelease;%VCINSTALLDIR%\Common7\Tools\bin;%PATH%;
-
 @echo off
 
 echo GYP_DEFINES:%GYP_DEFINES%
